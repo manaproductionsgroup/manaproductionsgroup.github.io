@@ -6,7 +6,7 @@
 
 https://github.com/Binyr/NormalCrafter
 
-This tool generates NormalMap mappings. Not recommended for 12GB VRAM GPUs (although can run it if you downgrade the output), the minimum VRAM for 10 seconds of video at 30FPS is 20GB VRAM (tested in RunPod with RTX A2500).
+This tool generates NormalMap images from videos. Not recommended for 12GB VRAM GPUs (although can run it if you downgrade the output), the minimum VRAM for 10 seconds of video at 30FPS and 1024 image size of output is 20GB VRAM (tested in RunPod with RTX A2500).
 
 The original repo has no instructions *what you should install* to run correctly but here you have it:
 
