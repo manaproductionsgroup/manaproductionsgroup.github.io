@@ -1,5 +1,18 @@
 # manaproductionsgroup.github.io
 
+# TOOLS
+
+## ESSENTIAL FFMPEG COMMANDS
+
+### Convert video to frames
+`ffmpeg -r 1 -i video.mp4 -r 1 "%03d.jpg"`
+
+### Convert frames to video
+`ffmpeg -framerate 8 -pattern_type glob -i '*.jpg' -c:v copy output.mp4`
+
+### Reverse a video
+`ffmpeg -i output.mp4 -vf reverse -af areverse output_rev.mp4`
+
 # AI TOOLS NOTES
 
 ## NormalCrafter
