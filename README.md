@@ -15,6 +15,47 @@
 
 # AI TOOLS NOTES
 
+## Hunyuan3D 2.1 (ComfyUI)
+
+clone ComfyUI repo, enter to the folder and:
+
+```
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+cd custom_nodes
+git clone https://github.com/visualbruno/ComfyUI-Hunyuan3d-2-1.git
+cd ComfyUI-Hunyuan3d-2-1
+pip install -r requirements.txt
+cd hy3dpaint/custom_rasterizer
+python3 setup.py install
+cd ../DifferentiableRenderer
+python3 setup.py install
+cd ../..
+pip install transformers==4.49 diffusers==0.32.2 rembg onnxruntime # downgrade and adding more missing dependencies
+git clone https://github.com/SarahWeiii/diso.git # adding a dependency where only works with compiling it locally
+cd diso
+python3 setup.py install
+cd ..
+python3 main.py --lowvram
+```
+
+## bgbye
+
+git clone https://github.com/MangoLion/bgbye
+
+and edit `server/setup.sh` replacing the same paragraph with this one:
+```
+# Install Python dependencies
+pip install numpy==1.26.4 #WEIRD IMPORT ERROR WORKAROUND FOR REMBG
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+pip install fastapi uvicorn transformers pillow scikit-image transparent-background rembg opencv-python-headless python-multipart requests
+pip install carvekit #--extra-index-url https://download.pytorch.org/whl/cu121
+pip install onnxruntime #ADDED TO FIX ModuleNotFoundError
+```
+
+and follow the same installation/run steps shown in the repo.
+
 ## NormalCrafter
 
 https://github.com/Binyr/NormalCrafter
