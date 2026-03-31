@@ -15,17 +15,19 @@
 
 # AI TOOLS NOTES
 
-Keep in mind you have to install CUDA Toolkit version 12, and set in the bash `export CUDA_HOME=/usr/local/cuda-12` so it can compile the binaries with CUDA 12 on RTX 50xx/CUDA 13.0 system.
+Keep in mind you have to install CUDA Toolkit version 12, and set in the bash `export CUDA_HOME=/usr/local/cuda-12` so it can compile the binaries with CUDA 12 on RTX 50xx/CUDA 13.0 system in case CUDA 12 is necessary.
 
 ## Hunyuan3D 2.1 (ComfyUI)
 
 clone ComfyUI repo, enter to the folder and:
 
+IMPORTANT: use `pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 --index-url https://download.pytorch.org/whl/cu128` instead if you have an RTX 50xx for this.
 
 ```
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+pip install -r requirements.txt
 cd custom_nodes
 git clone https://github.com/visualbruno/ComfyUI-Hunyuan3d-2-1.git
 cd ComfyUI-Hunyuan3d-2-1
@@ -39,7 +41,7 @@ pip install transformers==4.49 diffusers==0.32.2 rembg onnxruntime # downgrade a
 git clone https://github.com/SarahWeiii/diso.git # adding a dependency where only works with compiling it locally
 cd diso
 python3 setup.py install
-cd ..
+cd ../..
 python3 main.py --lowvram
 ```
 
