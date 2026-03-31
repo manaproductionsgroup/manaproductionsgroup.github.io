@@ -15,9 +15,12 @@
 
 # AI TOOLS NOTES
 
+Keep in mind you have to install CUDA Toolkit version 12, and set in the bash `export CUDA_HOME=/usr/local/cuda-12` so it can compile the binaries with CUDA 12 on RTX 50xx/CUDA 13.0 system.
+
 ## Hunyuan3D 2.1 (ComfyUI)
 
 clone ComfyUI repo, enter to the folder and:
+
 
 ```
 python3.11 -m venv .venv
