@@ -17,6 +17,50 @@
 
 Keep in mind you have to install CUDA Toolkit version 12, and set in the bash `export CUDA_HOME=/usr/local/cuda-12` so it can compile the binaries with CUDA 12 on RTX 50xx/CUDA 13.0 system in case CUDA 12 is necessary.
 
+## Trellis2 (ComfyUI)
+Clone the ComfyUI repo (v0.18.2 at the time of writing this section)
+
+Download these files from here https://github.com/visualbruno/ComfyUI-Trellis2/tree/main/wheels/Linux/Torch291
+
+And put it in the ComfyUI folder:
+
+```
+nvdiffrast-0.4.0-cp312-cp312-linux_x86_64.whl
+nvdiffrec_render-0.0.0-cp312-cp312-linux_x86_64.whl
+o_voxel-0.0.1-cp312-cp312-linux_x86_64.whl
+```
+
+```
+export CUDA_HOME=/usr/local/cuda-12
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1 --index-url https://download.pytorch.org/whl/cu128
+pip install -r requirements.txt
+pip install -r manager_requirements.txt
+cd custom_nodes
+git clone https://github.com/PozzettiAndrea/ComfyUI-TRELLIS2.git
+cd ComfyUI-TRELLIS2
+pip install -r requirements.txt
+cd ../..
+
+git clone https://github.com/JeffreyXiang/CuMesh.git
+cd CuMesh
+pip install . --no-build-isolation
+cd ..
+git clone https://github.com/visualbruno/FlexGEMM.git
+cd FlexGEMM
+pip install . --no-build-isolation
+cd ..
+pip install nvdiffrast-0.4.0-cp312-cp312-linux_x86_64.whl
+pip install nvdiffrec_render-0.0.0-cp312-cp312-linux_x86_64.whl
+pip install o_voxel-0.0.1-cp312-cp312-linux_x86_64.whl
+python3 main.py --enable-manager
+```
+
+And last install the "GeometryPack" node.
+
+The workflows are at `custom_nodes/ComfyUI-TRELLIS2/workflows/`
+
 ## Hunyuan3D 2.1 (ComfyUI)
 
 clone ComfyUI repo, enter to the folder and:
