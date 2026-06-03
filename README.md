@@ -62,7 +62,10 @@ RUN python3 /tmp/patch_pinmem.py
 # Environment
 # =============================================================================
 ```
-And start/run the docker normally: `ENABLE_GRADIO=1 HF_TOKEN=your_token docker compose up`
+
+Then modify the line `ENV GEMMA_QUANTIZE=nf4` as `ENV GEMMA_QUANTIZE=int8`
+
+Finally, start/run the docker normally: `ENABLE_GRADIO=1 HF_TOKEN=your_token docker compose up`
 
 ## Trellis2 (ComfyUI)
 Clone the ComfyUI repo (v0.18.2 at the time of writing this section)
