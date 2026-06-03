@@ -17,6 +17,53 @@
 
 Keep in mind you have to install CUDA Toolkit version 12, and set in the bash `export CUDA_HOME=/usr/local/cuda-12` so it can compile the binaries with CUDA 12 on RTX 50xx/CUDA 13.0 system in case CUDA 12 is necessary.
 
+## Scenema Audio
+Enable `int8` in `docker-compose.yml`:
+
+```
+- GEMMA_QUANTIZE=int8
+```
+
+Enabling `int8` for 16GB VRAM cards will fail during Voice Design and Voice Cloning inferences. You have to patch it.
+
+Create the python file `patch_pinmem.py` in the root folder of scenema-audio with this content:
+
+```
+import re, pathlib
+
+target = pathlib.Path(
+    "/usr/local/lib/python3.12/dist-packages/ltx_core/block_streaming/builder.py"
+)
+src = target.read_text()
+
+old = "pinned[idx] = {name: tensor.to(dtype=dtype).pin_memory() for name, tensor in src.items()}"
+new = """def _to_pinned(t, dtype):
+                t = t.to(dtype=dtype)
+                try:
+                    return t.pin_memory()
+                except RuntimeError:
+                    return t
+            pinned[idx] = {name: _to_pinned(tensor, dtype) for name, tensor in src.items()}"""
+
+if old in src:
+    target.write_text(src.replace(old, new))
+    print("Patch applied.")
+else:
+    print("Already patched or line changed.")
+```
+
+And add these **two** lines in `Dockerfile` right before the environment settings:
+
+```
+COPY patch_pinmem.py /tmp/patch_pinmem.py
+RUN python3 /tmp/patch_pinmem.py
+
+# =============================================================================
+# Environment
+# =============================================================================
+```
+And start/run the docker normally: `ENABLE_GRADIO=1 HF_TOKEN=your_token docker compose up`
+
 ## Trellis2 (ComfyUI)
 Clone the ComfyUI repo (v0.18.2 at the time of writing this section)
 
