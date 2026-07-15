@@ -17,6 +17,30 @@
 
 Keep in mind you have to install CUDA Toolkit version 12, and set in the bash `export CUDA_HOME=/usr/local/cuda-12` so it can compile the binaries with CUDA 12 on RTX 50xx/CUDA 13.0 system in case CUDA 12 is necessary.
 
+## ultimatevocalremovergui (linux)
+
+A few things to do when installing this thing for linux.
+
+Make sure to use a `python3.11` venv, and install `python3.11-tk`
+
+Then, before installing the dependencies, you have to locally install Dora to modify one thing.
+
+Clone the source code https://files.pythonhosted.org/packages/0c/7e/982758c0a46ccbb6356814066ccf5c849f283ea95bce098de81901adf1ab/Dora-0.0.3.tar.gz
+
+Extract it on the same folder and modify the file `setup.py`, under `install_requires` list, replace `sklearn` to `scikit-learn`
+
+Modify the file `demucs/states.py`, look for the function `load_model(...)` and in the line `package = torch.load(path, 'cpu')` replace it to `package = torch.load(path, map_location='cpu', weights_only=False)` and save.
+
+Now do `pip install -e ./Dora-0.0.3` UNDER THE CREATED VENV
+
+And now you can do `pip install -r requirements.txt`
+
+That's it, now you can run `python3 UVR.py` without issues.
+
+## Video usage in ComfyUI
+
+To avoid conflicts between Cudnn versions and CUDA and so on (in case these exists), recent pytorch versions have this stuff included already, so you could run `LD_LIBRARY_PATH="" python main.py --lowvram` and will use the dependencies from venv instead of the system.
+
 ## Scenema Audio
 Enable `int8` in `docker-compose.yml`:
 
